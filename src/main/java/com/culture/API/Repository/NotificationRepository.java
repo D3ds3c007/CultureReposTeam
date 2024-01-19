@@ -9,5 +9,6 @@ import com.culture.API.Models.MongodbEntity.Notification;
 public interface NotificationRepository extends MongoRepository<Notification, String>{
 
         List<Notification> findAll();
-        Notification findById(int id);
+        Notification findByHashcode(String id);
+        void deleteByHashcode(String hashcode);
 }
