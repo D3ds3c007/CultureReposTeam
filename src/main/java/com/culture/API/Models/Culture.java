@@ -118,7 +118,6 @@ public class Culture implements Serializable{
         this.yieldPrice = yieldPrice;
         this.groundType = groundType;
     }
-     
 
     public static Culture saveCulture(Culture culture, CultureRepository cr) throws Exception{
 

@@ -41,8 +41,7 @@ public class GroundType implements Serializable{
         this.name = name;
     }
 
-    public GroundType()
-    {
+    public GroundType(){
 
     }
 

@@ -54,6 +54,7 @@ public class Owner implements Serializable{
         this.pwd = pwd;
         this.privilege = privilege;
     }
+    
     public Owner(int idOwner, String name, String email, String pwd, Wallet wallet, int privilege, List<Field> fields) {
         this.idOwner = idOwner;
         this.name = name;

@@ -4,11 +4,9 @@ import java.util.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.culture.API.Models.Field;
-import com.culture.API.Models.Owner;
 import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.NotificationRepository;
 import com.culture.API.Repository.OwnerRepository;
@@ -21,7 +19,6 @@ import jakarta.persistence.TemporalType;
 @Document(collection="Notification")
 public class Notification {
     
-
     @Basic
     private int idSender;
 
@@ -46,9 +43,6 @@ public class Notification {
     public Notification() {
         
     }
-
-
-
     public int getIdSender() {
         return idSender;
     }

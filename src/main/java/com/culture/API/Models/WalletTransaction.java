@@ -35,6 +35,15 @@ public class WalletTransaction implements Serializable{
     public WalletTransaction() {
     }
 
+    public WalletTransaction(int idTransaction, Wallet wallet, int type, double amount, Timestamp dateTransaction) {
+        this.idTransaction = idTransaction;
+        this.wallet = wallet;
+        this.type = type;
+        this.amount = amount;
+        this.dateTransaction = dateTransaction;
+    }
+
+
     public int getIdTransaction() {
         return idTransaction;
     }

@@ -39,9 +39,18 @@ public class Field implements Serializable{
     @OneToMany(mappedBy = "field", fetch = FetchType.EAGER)
     private List<Plot> plots;
 
-
+    
     public Field() {
 
+    }
+    
+    public Field(int idField, String hashcode, double latitude, double longitude, Owner owner, List<Plot> plots) {
+        this.idField = idField;
+        this.hashcode = hashcode;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.owner = owner;
+        this.plots = plots;
     }
 
     public int getIdField() {
@@ -50,6 +59,14 @@ public class Field implements Serializable{
 
     public void setIdField(int idField) {
         this.idField = idField;
+    }
+
+    public String getHashcode() {
+        return hashcode;
+    }
+
+    public void setHashcode(String hashcode) {
+        this.hashcode = hashcode;
     }
 
     public double getLatitude() {
@@ -93,15 +110,5 @@ public class Field implements Serializable{
         List<Field> listFields = fi.findAll();
         return listFields;
     }
-
-    public String getHashcode() {
-        return hashcode;
-    }
-
-    public void setHashcode(String hashcode) {
-        this.hashcode = hashcode;
-    }
-
-    
 
 }

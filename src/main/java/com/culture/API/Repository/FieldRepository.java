@@ -12,6 +12,5 @@ public interface FieldRepository extends JpaRepository<Field, Long> {
         Field save(Field field);
         List<Field> findByOwner(Owner o);
         List<Field> findAll();
-        
 }
 

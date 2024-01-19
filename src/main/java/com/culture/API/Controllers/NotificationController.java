@@ -1,7 +1,6 @@
 package com.culture.API.Controllers;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
