@@ -10,6 +10,7 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
         // Field save(Field field);
         List<Owner> findAll();
         Owner findByidOwner(int idOwner);
+        Owner findByEmailAndPwd(String email, String pwd);
         Owner save(Owner o);
 }
 

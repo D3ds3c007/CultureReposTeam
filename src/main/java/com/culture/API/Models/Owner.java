@@ -40,6 +40,10 @@ public class Owner implements Serializable{
     @Transient
     private List<Field> fields;
 
+    public Owner login(OwnerRepository or)throws SQLException{
+        return Owner.getOwner(or,this.getEmail(),this.getPwd());
+    }
+
     public Owner() {
     }
     
@@ -123,6 +127,10 @@ public class Owner implements Serializable{
     public static List<Owner> findAllOwner(OwnerRepository or) throws SQLException{
         List<Owner> o = or.findAll();
         return o;
+    }
+    public static Owner getOwner(OwnerRepository or,String email, String pwd) throws SQLException{
+        Owner ow = or.findByEmailAndPwd(email,pwd);
+        return ow;
     }
 
 }
