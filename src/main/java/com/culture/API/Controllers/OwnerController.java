@@ -32,7 +32,23 @@ public class OwnerController {
             return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping("/login")
+    public ResponseEntity<Owner> login(@RequestBody Owner o) {
+        try{
+            Owner ow = Owner.saveOwner(o, ownerRepository);
+            if(ow!=null){
+                return new ResponseEntity<>(ow,HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(null,HttpStatus.UNAUTHORIZED);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+
+    }
     @PostMapping("/owner")
     public ResponseEntity<Owner> insertOwner(@RequestBody Owner o) {
         try{
