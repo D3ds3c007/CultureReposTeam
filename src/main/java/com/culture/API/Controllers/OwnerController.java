@@ -35,7 +35,7 @@ public class OwnerController {
     @PostMapping("/login")
     public ResponseEntity<Owner> login(@RequestBody Owner o) {
         try{
-            Owner ow = Owner.saveOwner(o, ownerRepository);
+            Owner ow = o.login(ownerRepository);
             if(ow!=null){
                 return new ResponseEntity<>(ow,HttpStatus.OK);
             }else{
