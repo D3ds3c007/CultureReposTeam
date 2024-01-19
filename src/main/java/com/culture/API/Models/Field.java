@@ -21,6 +21,9 @@ public class Field implements Serializable{
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private int idField;
+
+    @Basic
+    private String hashcode;
     
     @Basic
     private double latitude;
@@ -90,5 +93,15 @@ public class Field implements Serializable{
         List<Field> listFields = fi.findAll();
         return listFields;
     }
+
+    public String getHashcode() {
+        return hashcode;
+    }
+
+    public void setHashcode(String hashcode) {
+        this.hashcode = hashcode;
+    }
+
+    
 
 }
