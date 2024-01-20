@@ -6,7 +6,7 @@ import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;     
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +48,7 @@ public class OwnerController {
         }
 
     }
+
     // @GetMapping("/owners")
     // public ResponseEntity<List<Field>> getOwnersWithFields(){
     //     try{
