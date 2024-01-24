@@ -35,6 +35,7 @@ public class OwnerController {
             return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/login")
     public ResponseEntity<Owner> login(@RequestBody Owner o) {
         try{
@@ -52,6 +53,7 @@ public class OwnerController {
         }
 
     }
+
     @PostMapping("/owner")
     public ResponseEntity<Owner> insertOwner(@RequestBody Owner o) {
         try{
@@ -65,6 +67,7 @@ public class OwnerController {
         }
 
     }
+    
     // @GetMapping("/owners")
     // public ResponseEntity<List<Field>> getOwnersWithFields(){
     //     try{

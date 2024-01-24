@@ -20,6 +20,11 @@ import com.culture.API.Repository.NotificationRepository;
 import com.culture.API.Repository.OwnerRepository;
 import com.culture.API.Utils.HashGenerator;
 
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
 @RestController
 @RequestMapping("/api")
 public class NotificationController {

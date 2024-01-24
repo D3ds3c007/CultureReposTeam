@@ -10,6 +10,11 @@ import java.util.List;
 import com.culture.API.Models.Ressource;
 import com.culture.API.Repository.RessourceRepository;
 
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
 @RestController
 @RequestMapping("/api")
 public class RessourceController {

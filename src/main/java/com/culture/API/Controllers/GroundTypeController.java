@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.culture.API.Models.GroundType;
 import com.culture.API.Repository.*;
 
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
 @RestController
 @RequestMapping("/api")
 public class GroundTypeController {

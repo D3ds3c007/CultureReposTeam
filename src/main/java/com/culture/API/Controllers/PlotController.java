@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.culture.API.Models.Plot;
 import com.culture.API.Repository.PlotRepository;
 
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
 @RestController
 @RequestMapping("/api")
 public class PlotController {
