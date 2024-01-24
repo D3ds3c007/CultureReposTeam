@@ -23,7 +23,7 @@ public class PlotController {
 
     PlotRepository plotRepository;
 
-    @PostMapping("/plots")
+    @PostMapping("/plot")
     public ResponseEntity<Plot> savePlot(@RequestBody Plot plot) {
         try {
             Plot plot2 = Plot.savePlot(plot, plotRepository);

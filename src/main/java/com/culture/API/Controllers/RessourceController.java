@@ -22,7 +22,7 @@ public class RessourceController {
 
     RessourceRepository ressourceRepository;
 
-    @PostMapping("/ressources")
+    @PostMapping("/ressource")
 	public ResponseEntity<Ressource> saveRessource(@RequestBody Ressource ressource) 
     {
         try { 
@@ -34,7 +34,6 @@ public class RessourceController {
 		
 	}
 
-
     @GetMapping("/ressources")
 	public ResponseEntity<List<Ressource>> findRessource() 
     {
@@ -44,8 +43,6 @@ public class RessourceController {
         } catch(Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-		
 	}
-
 
 }
