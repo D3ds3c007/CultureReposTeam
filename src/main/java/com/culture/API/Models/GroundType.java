@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 
 import com.culture.API.Repository.*;
 
@@ -23,6 +24,7 @@ public class GroundType implements Serializable{
     private String name;
 
     @OneToMany(mappedBy = "groundType", fetch=FetchType.EAGER)
+    @Transient
     private List<Culture> cultures;
 
 

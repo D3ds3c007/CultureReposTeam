@@ -64,5 +64,18 @@ public class CultureController {
             return new ResponseEntity<>(null , HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<Category>> getAllCategory()
+    {
+        try {
+            List<Category> c = Category.findAll(categoryRepository);
+            return new ResponseEntity<>(c , HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null , HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }

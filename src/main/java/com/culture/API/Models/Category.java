@@ -3,6 +3,7 @@ package com.culture.API.Models;
 import java.util.List;
 
 import com.culture.API.Repository.CategoryRepository;
+import com.culture.API.Repository.CultureRepository;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Category {
@@ -23,6 +25,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category", fetch=FetchType.EAGER)
+    @Transient
     private List<Culture> cultures;
 
     public int getIdCategory() {
@@ -63,6 +66,12 @@ public class Category {
     public Category insert(CategoryRepository cr)
     {
         Category c = cr.save(this);
+        return c;
+    }
+
+    public static List<Category> findAll(CategoryRepository cr) throws Exception
+    {
+        List<Category> c = cr.findAll();
         return c;
     }
 }
