@@ -23,6 +23,9 @@ public class Notification {
     private int idSender;
 
     @Basic
+    private String name;
+
+    @Basic
     private String hashcode;
 
     @Basic
@@ -79,6 +82,13 @@ public class Notification {
     }
     public void setHashcode(String hashcode) {
         this.hashcode = hashcode;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
     
     public static List<Notification> findAll(NotificationRepository repository) throws SQLException {
