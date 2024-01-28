@@ -14,7 +14,7 @@ import com.culture.API.Models.LastThreeActivitiesView;
 import com.culture.API.Repository.LastThreeActivitiesViewRepository;
 
 @RestController
-@RequestMapping("/api/last-three-activities")
+@RequestMapping("/api")
 public class LastThreeActivitiesViewController {
 
     private final LastThreeActivitiesViewRepository repository;
@@ -24,7 +24,7 @@ public class LastThreeActivitiesViewController {
         this.repository = repository;
     }
 
-    @GetMapping("/plot/{plotId}")
+    @GetMapping("/last-three-activities/plot/{plotId}")
     public ResponseEntity<List<LastThreeActivitiesView>> getActivitiesByPlotId(@PathVariable int plotId) {
         try {
             List<LastThreeActivitiesView> activities = repository.findByidPlot(plotId);

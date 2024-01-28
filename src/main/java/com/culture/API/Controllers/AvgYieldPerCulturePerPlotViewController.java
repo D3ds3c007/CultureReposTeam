@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.culture.API.Models.AvgYieldPerCulturePerPlotView;
 import com.culture.API.Repository.AvgYieldPerCulturePerPlotViewRepository;
 
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
 @RestController
-@RequestMapping("/api/avg-yield")
+@RequestMapping("/api")
 public class AvgYieldPerCulturePerPlotViewController {
 
     private final AvgYieldPerCulturePerPlotViewRepository repository;
@@ -23,7 +28,7 @@ public class AvgYieldPerCulturePerPlotViewController {
         this.repository = repository;
     }
 
-    @GetMapping
+    @GetMapping("/avg-yield")
     public ResponseEntity<List<AvgYieldPerCulturePerPlotView>> getAllAvgYields() {
         try {
             List<AvgYieldPerCulturePerPlotView> avgYields = repository.findAll();

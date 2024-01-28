@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.culture.API.Models.AvgYieldPerCulturePerPlotPerMonthView;
 import com.culture.API.Repository.AvgYieldPerCulturePerPlotPerMonthViewRepository;
 
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
 @RestController
-@RequestMapping("/api/avg-per-month")
+@RequestMapping("/api")
 public class AvgYieldPerCulturePerPlotPerMonthViewController {
     private final AvgYieldPerCulturePerPlotPerMonthViewRepository repository;
 
@@ -23,7 +27,7 @@ public class AvgYieldPerCulturePerPlotPerMonthViewController {
         this.repository = repository;
     }
 
-    @GetMapping("/plot/{plotId}/month/{month}")
+    @GetMapping("/avg-per-month/plot/{plotId}/month/{month}")
     public ResponseEntity<List<AvgYieldPerCulturePerPlotPerMonthView>> getAvgYieldByPlotAndMonth(
             @PathVariable int plotId, @PathVariable int month) {
         try {
