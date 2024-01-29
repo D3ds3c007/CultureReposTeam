@@ -58,6 +58,7 @@ public class NotificationController {
             Notification n = repository.save(notif);
             return new ResponseEntity<>(n, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
