@@ -24,12 +24,15 @@ public class Field implements Serializable{
 
     @Basic
     private String hashcode;
-    
-    @Basic
-    private double latitude;
 
     @Basic
-    private double longitude;
+    private String description;
+    
+    @Basic
+    private String location;
+
+    @Basic
+    private double area;
 
     @ManyToOne()
     @JoinColumn(name = "idOwner")
@@ -44,13 +47,12 @@ public class Field implements Serializable{
 
     }
     
-    public Field(int idField, String hashcode, double latitude, double longitude, Owner owner, List<Plot> plots) {
+    public Field(int idField, String hashcode, String location, String description, double area) {
         this.idField = idField;
         this.hashcode = hashcode;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.owner = owner;
-        this.plots = plots;
+        this.location = location;
+        this.description = description;
+        this.area = area;
     }
 
     public int getIdField() {
@@ -69,20 +71,28 @@ public class Field implements Serializable{
         this.hashcode = hashcode;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
     }
 
     public Owner getOwner() {

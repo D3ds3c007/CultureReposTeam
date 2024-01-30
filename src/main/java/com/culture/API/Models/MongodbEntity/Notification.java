@@ -28,19 +28,11 @@ public class Notification {
     @Basic
     private String hashcode;
 
-    @Basic
-    private double longitude;
-
-    @Basic
-    private double latitude;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public Notification(int idSender, double longitude, double latitude, Date date) {
+    public Notification(int idSender, Date date) {
         this.idSender = idSender;
-        this.longitude = longitude;
-        this.latitude = latitude;
         this.date = date;
     }
     public Notification() {
@@ -52,22 +44,6 @@ public class Notification {
 
     public void setIdSender(int idSender) {
         this.idSender = idSender;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
     }
 
     public Date getDate() {
@@ -110,8 +86,6 @@ public class Notification {
         Notification notif = repository.findByHashcode(hashcode);
 
         Field f = new Field();
-            f.setLatitude(notif.getLatitude());
-            f.setLongitude(notif.getLongitude());
             f.setOwner(ownerRepository.findByidOwner(notif.getIdSender()));
             f.setHashcode(notif.getHashcode());
 
