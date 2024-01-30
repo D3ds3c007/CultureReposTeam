@@ -15,15 +15,13 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
+import com.culture.API.Models;
+
 
 @Document(collection="Notification")
 public class Notification {
     
-    @Basic
-    private int idSender;
-
-    @Basic
-    private String name;
+    private Owner owner;
 
     @Basic
     private String hashcode;
@@ -31,19 +29,21 @@ public class Notification {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public Notification(int idSender, Date date) {
-        this.idSender = idSender;
+    public Notification(Owner owner, String hashcode, Date date) {
+        this.owner = owner;
+        this.hashcode = hashcode;
         this.date = date;
     }
     public Notification() {
         
     }
-    public int getIdSender() {
-        return idSender;
+
+    public Owner getOwner() {
+        return owner;
     }
 
-    public void setIdSender(int idSender) {
-        this.idSender = idSender;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public Date getDate() {
@@ -53,18 +53,13 @@ public class Notification {
     public void setDate(Date date) {
         this.date = date;
     }
+
     public String getHashcode() {
         return hashcode;
     }
+
     public void setHashcode(String hashcode) {
         this.hashcode = hashcode;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     
     public static List<Notification> findAll(NotificationRepository repository) throws SQLException {
