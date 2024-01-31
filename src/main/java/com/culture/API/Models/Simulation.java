@@ -1,6 +1,7 @@
 package com.culture.API.Models;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Basic;
@@ -29,7 +30,7 @@ public class Simulation implements Serializable{
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable=false)
-    private Timestamp dateSimulation;
+    private Date dateSimulation;
 
     public int getIdSimulation() {
         return idSimulation;
@@ -55,11 +56,11 @@ public class Simulation implements Serializable{
         this.idCulture = idCulture;
     }
 
-    public Timestamp getDateSimulation() {
+    public Date getDateSimulation() {
         return dateSimulation;
     }
 
-    public void setDateSimulation(Timestamp dateSimulation) {
+    public void setDateSimulation(Date dateSimulation) {
         this.dateSimulation = dateSimulation;
     }
 

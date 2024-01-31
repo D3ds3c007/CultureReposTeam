@@ -16,8 +16,6 @@ JOIN action a ON sd.id_action = a.id_action
 ORDER BY p.id_plot, s.date_simulation DESC;
 
 
-JOIN ground_type g on g.id_ground_type=p.id_ground_type
-JOIN culture c on c.id_ground_type=g.id_ground_type
 
 CREATE VIEW avg_yield_per_culture_per_plot_view AS
 SELECT p.id_plot,s.id_culture,c.name AS culture_name, ROUND(AVG(y.quantity) / p.area::numeric, 2) AS avg_yield
@@ -45,3 +43,9 @@ GROUP BY
     s.id_culture,
     c.name,
     EXTRACT(MONTH FROM y.date_yield);
+
+
+
+
+JOIN ground_type g on g.id_ground_type=p.id_ground_type
+JOIN culture c on c.id_ground_type=g.id_ground_type

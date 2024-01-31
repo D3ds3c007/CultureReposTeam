@@ -1,6 +1,7 @@
 package com.culture.API.Models;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -14,7 +15,7 @@ public class LastThreeActivitiesView {
     private String actionName;
     private int quantity;
     private double price;
-    private Timestamp dateSimulation;
+    private Date dateSimulation;
     
     public int getIdSimulation() {
         return idSimulation;
@@ -52,10 +53,10 @@ public class LastThreeActivitiesView {
     public void setPrice(double price) {
         this.price = price;
     }
-    public Timestamp getDateSimulation() {
+    public Date getDateSimulation() {
         return dateSimulation;
     }
-    public void setDateSimulation(Timestamp dateSimulation) {
+    public void setDateSimulation(Date dateSimulation) {
         this.dateSimulation = dateSimulation;
     }
     public LastThreeActivitiesView(int idSimulation, int idPlot, int idDetails, String actionName, int quantity,

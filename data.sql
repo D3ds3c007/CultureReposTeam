@@ -42,6 +42,13 @@ INSERT INTO simulation (id_simulation, id_plot, id_culture, date_simulation) VAL
 (8, 2, 2, '2024-03-28 12:30:00'),
 (9, 3, 1, '2024-04-03 15:45:00');
 
+-- Insertion des données dans la table "simulation"
+INSERT INTO simulation (id_simulation, id_plot, id_culture, date_simulation) VALUES
+(10, 1, 1, '2024-01-01 10:00:00'),
+(11, 2, 2, '2024-02-02 12:30:00'),
+(12, 3, 1, '2024-03-03 15:45:00'),
+(13, 4, 3, '2024-04-04 18:00:00');
+
 
 -- Insertion des données dans la table "simulation_details"
 INSERT INTO simulation_details (id_details, id_simulation, id_action, quantity, price) VALUES
@@ -76,12 +83,6 @@ INSERT INTO plot (id_plot, id_field, area, id_ground_type) VALUES
 (3, 2, 15.2, 1),
 (4, 3, 12.0, 3);
 
--- Insertion des données dans la table "simulation"
-INSERT INTO simulation (id_simulation, id_plot, id_culture, date_simulation) VALUES
-(10, 1, 1, '2024-01-01 10:00:00'),
-(11, 2, 2, '2024-02-02 12:30:00'),
-(12, 3, 1, '2024-03-03 15:45:00'),
-(13, 4, 3, '2024-04-04 18:00:00');
 
 -- Insertion des données dans la table "yield"
 INSERT INTO yield (id_yield, id_simulation, date_yield, quantity) VALUES

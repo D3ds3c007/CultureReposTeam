@@ -6,6 +6,7 @@ public class SimulationDetailsView {
     private String actionName;
     private int quantity;
     private double price;
+    
     public int getIdSimulation() {
         return idSimulation;
     }
