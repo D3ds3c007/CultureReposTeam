@@ -56,7 +56,6 @@ INSERT INTO simulation_details (id_details, id_simulation, id_action, quantity, 
 (9, 9, 3, 60, 80.0);
 
 
-22222222222222222222222222222222222
 INSERT INTO field (id_field, latitude, longitude, id_owner) VALUES
 (1, 40.7128, -74.0060, 1),
 (2, 34.0522, -118.2437, 2),
