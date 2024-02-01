@@ -1,5 +1,9 @@
 package com.culture.API.Models;
 
+import java.util.List;
+
+import com.culture.API.Repository.SimulationDetailsViewRepository;
+
 public class SimulationDetailsView {
     private int idSimulation;
     private int idDetails;
@@ -44,7 +48,11 @@ public class SimulationDetailsView {
         this.quantity = quantity;
         this.price = price;
     }
-    public SimulationDetailsView() {
+    public SimulationDetailsView() { }
+
+    public List<SimulationDetailsView> findAllSimulationDetailsViews(SimulationDetailsViewRepository sdr) {
+        List<SimulationDetailsView> s = sdr.findAll();
+        return s;
     }
 
 }

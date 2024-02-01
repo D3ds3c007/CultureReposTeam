@@ -1,6 +1,7 @@
 package com.culture.API.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -10,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+
+import com.culture.API.Repository.SimulationDetailsRepository;
 
 @Entity
 public class SimulationDetails implements Serializable{
@@ -82,6 +85,16 @@ public class SimulationDetails implements Serializable{
     public SimulationDetails()
     {
         
+    }
+
+    public SimulationDetails savSimulationDetails(SimulationDetails simulationDetails, SimulationDetailsRepository sdr) throws Exception{
+        SimulationDetails s = sdr.save(simulationDetails);
+        return s;
+    }
+
+    public List<SimulationDetails> findAllSimulationDetails(SimulationDetailsRepository sdr) throws Exception{
+        List<SimulationDetails> s = sdr.findAll();
+        return s;
     }
     
 }

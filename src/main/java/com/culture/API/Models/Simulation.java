@@ -2,6 +2,7 @@ package com.culture.API.Models;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import java.sql.Timestamp;
 
 import jakarta.persistence.Basic;
@@ -14,6 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+
+import com.culture.API.Repository.SimulationRepository;
+import java.util.List;
 
 @Entity
 public class Simulation implements Serializable{
@@ -74,6 +78,16 @@ public class Simulation implements Serializable{
     public Simulation()
     {
         
+    }
+
+    public Simulation saveSimulation(Simulation simulation, SimulationRepository sr) throws Exception{
+        Simulation s = sr.save(simulation);
+        return s;
+    }
+
+    public List<Simulation> findAllSimulation(SimulationRepository sr) throws Exception{
+        List<Simulation> s = sr.findAll();
+        return s;
     }
     
 }
