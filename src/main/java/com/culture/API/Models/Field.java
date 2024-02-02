@@ -5,6 +5,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.culture.API.Repository.FieldRepository;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -36,6 +40,7 @@ public class Field implements Serializable{
 
     private Owner owner;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPlot")
     @OneToMany(mappedBy = "field", fetch = FetchType.EAGER)
     private List<Plot> plots;
 
