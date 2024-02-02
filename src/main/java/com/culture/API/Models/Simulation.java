@@ -20,6 +20,8 @@ import jakarta.persistence.TemporalType;
 import com.culture.API.Repository.ActionRepository;
 import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
+import com.culture.API.Repository.WalletRepository;
+import com.culture.API.Repository.WalletTransactionRepository;
 import com.culture.API.Repository.YieldRepository;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -101,7 +103,8 @@ public class Simulation implements Serializable{
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Simulation insertSimulation( YieldRepository yr, SimulationRepository sr, SimulationDetailsRepository sdr,
+    public Simulation insertSimulation( WalletRepository wr, WalletTransactionRepository wtr,
+                                     YieldRepository yr, SimulationRepository sr, SimulationDetailsRepository sdr,
                                      ActionRepository ar, Integer sid , Plot plot, Culture culture, 
                                      Ressource ressource, int quantity ) throws Exception {
         try {
@@ -131,7 +134,7 @@ public class Simulation implements Serializable{
 
                 simulation = simulation.saveSimulation(simulation, sr);
             }else{
-                if(sdr.findFirstBySimulationAndRessource_Action_Name(s, "Recolte") == null){
+                if(s != null && sdr.findFirstBySimulationAndRessource_Action_Name(s, "Recolte") == null){
                     simulation = s ;
                 }else{
                     throw new RuntimeException("CLOSED OR UNOPENED SIMULATION");
@@ -146,6 +149,7 @@ public class Simulation implements Serializable{
             simulationDetails.setPrice(price);
 
             /**plot.getField().getOwner().getWallet(). transac(  ); */
+            simulation.getPlot().getField().getOwner().getWallet().createTransaction(wtr, wr, price, -1);
 
             simulationDetails = simulationDetails.saveSimulationDetails(simulationDetails, sdr);
 

@@ -60,19 +60,19 @@
     "body simulate":
     {
 
-        "idSimulation": 1,
+        "idSimulation": 2,
         "plot": null,
         "culture":null,
         "ressource": {
-            "idRessource":6,
-            "name":"human ressource",
-            "pricePerUnit": 0,
+            "idRessource":8,
+            "name":"Engrais 2",
+            "pricePerUnit": 2000,
             "action": {
-                "idAction": 4,
-                "name": "Recolte",
-                "cons": 0
+                "idAction": 5,
+                "name": "Ajout Engrais",
+                "cons": 20
             },
-            "pros": 0
+            "pros": 20
         },
         "quantity": 2
 

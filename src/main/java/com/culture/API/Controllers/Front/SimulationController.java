@@ -18,6 +18,9 @@ import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
 import com.culture.API.Repository.YieldRepository;
 
+import com.culture.API.Repository.WalletRepository;
+import com.culture.API.Repository.WalletTransactionRepository;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -33,6 +36,10 @@ public class SimulationController {
     SimulationDetailsRepository sdr;
     @Autowired
     ActionRepository ar;
+    @Autowired
+    WalletRepository wr;
+    @Autowired
+    WalletTransactionRepository wtr;
     
     @PostMapping("/insertSimulation")
     public ResponseEntity<Simulation> insertSimulation(
@@ -40,7 +47,7 @@ public class SimulationController {
         
         try {
             Simulation simulation = new Simulation();
-            simulation = simulation.insertSimulation(yr, sr, sdr, ar, asr.idSimulation, asr.plot, asr.culture, asr.ressource, asr.quantity);
+            simulation = simulation.insertSimulation(wr, wtr, yr, sr, sdr, ar, asr.idSimulation, asr.plot, asr.culture, asr.ressource, asr.quantity);
 
             return new ResponseEntity<>(simulation, HttpStatus.CREATED);
         } catch (Exception e) {
