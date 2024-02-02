@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import com.culture.API.Repository.*;
 import java.util.List;
 
@@ -20,6 +23,12 @@ public class Ressource {
     @Basic
     private double pricePerUnit;
 
+    @ManyToOne
+    @JoinColumn(name="idAction")
+    private Action action;
+
+    @Basic
+    private double pros;
 
     public Ressource() {
 
@@ -49,11 +58,27 @@ public class Ressource {
         this.pricePerUnit = pricePerUnit;
     }
 
+    public Action getAction(){
+        return this.action;
+    }
 
-    public Ressource(int idRessource, String name, double pricePerUnit) {
+    public void setAction(Action action){
+        this.action = action;
+    }
+
+    public double getPros(){
+        return this.pros;
+    }
+
+    public void setPros(double pros){
+        this.pros = pros;
+    }
+
+    public Ressource(int idRessource, String name, double pricePerUnit, Action action) {
         this.idRessource = idRessource;
         this.name = name;
         this.pricePerUnit = pricePerUnit;
+        this.action = action; 
     }
 
 
@@ -68,6 +93,5 @@ public class Ressource {
 
         return r;
     }
-
 
 }

@@ -17,8 +17,15 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
+import com.culture.API.Repository.ActionRepository;
+import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
+import com.culture.API.Repository.YieldRepository;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 public class Simulation implements Serializable{
@@ -34,6 +41,7 @@ public class Simulation implements Serializable{
     @JoinColumn(name="idCulture")
     private Culture culture;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "UTC")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable=false)
     private Date dateSimulation;
@@ -90,6 +98,72 @@ public class Simulation implements Serializable{
     public List<Simulation> findAllSimulation(SimulationRepository sr) throws Exception{
         List<Simulation> s = sr.findAll();
         return s;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Simulation insertSimulation( YieldRepository yr, SimulationRepository sr, SimulationDetailsRepository sdr,
+                                     ActionRepository ar, Integer sid , Plot plot, Culture culture, 
+                                     Ressource ressource, int quantity ) throws Exception {
+        try {
+
+            /* insert Simulation */
+            Simulation simulation = new Simulation();
+            Simulation s = sid != null? sr.findById(sid).get() : null;
+
+            double price =  ressource.getPricePerUnit() * quantity;
+
+            if( s == null && ressource.getAction().getName().equals("Plantation")){
+                
+                /** check if able to continue simulation insertion */
+                Simulation lastSimulation = sr.findFirstByPlotOrderByDateSimulationDesc(plot);
+                if(
+                    sdr.findFirstBySimulationAndSimulation_PlotAndRessource_Action_Name(lastSimulation ,plot, "Plantation") != null &&
+                    sdr.findFirstBySimulationAndSimulation_PlotAndRessource_Action_Name(lastSimulation, plot, "Recolte") == null
+                ){
+                    throw new RuntimeException("NOT RECOLTED ON THIS PLOT");
+                }
+                
+                price =  culture.getSeedPrice() * plot.getArea();
+
+                simulation.setPlot(plot);
+                simulation.setCulture(culture);
+                simulation.setDateSimulation(new Timestamp(System.currentTimeMillis()));
+
+                simulation = simulation.saveSimulation(simulation, sr);
+            }else{
+                if(sdr.findFirstBySimulationAndRessource_Action_Name(s, "Recolte") == null){
+                    simulation = s ;
+                }else{
+                    throw new RuntimeException("CLOSED OR UNOPENED SIMULATION");
+                }
+            }
+
+            /* insert details */
+            SimulationDetails simulationDetails = new SimulationDetails();
+            simulationDetails.setRessource(ressource);
+            simulationDetails.setSimulation(simulation);
+            simulationDetails.setQuantity(quantity);
+            simulationDetails.setPrice(price);
+
+            /**plot.getField().getOwner().getWallet(). transac(  ); */
+
+            simulationDetails = simulationDetails.saveSimulationDetails(simulationDetails, sdr);
+
+            /* add yield if "recolte" */
+            if(ressource.getAction().getName().equals("Recolte")){
+                Yield yield = new Yield();
+                yield.setSimulation(simulation);
+                yield.setDateYield(new Timestamp(System.currentTimeMillis()));
+                yield.calculateQuantity(sdr, ar);
+
+                yield.saveYield(yr, yield);
+                System.out.println("YIELD : " + yield.getQuantity());
+            }
+            
+            return simulation;
+        } catch (Exception e) {
+            throw new RuntimeException("INSERT SIMULATION ERROR : " + e);
+        }
     }
     
 }
