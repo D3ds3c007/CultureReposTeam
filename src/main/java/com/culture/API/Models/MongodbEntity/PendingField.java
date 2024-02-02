@@ -1,21 +1,14 @@
 package com.culture.API.Models.MongodbEntity;
 
-import java.util.Date;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.culture.API.Models.Field;
-import com.culture.API.Repository.FieldRepository;
-import com.culture.API.Repository.NotificationRepository;
-import com.culture.API.Repository.OwnerRepository;
-
 import jakarta.persistence.Basic;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
-import com.culture.API.Models;
+import com.culture.API.Models.*;
+import com.culture.API.Repository.*;
 
 
 @Document(collection="PendingField")
@@ -86,4 +79,20 @@ public class PendingField {
     public void setOwner(Owner owner) {
         this.owner = owner;
     }
+
+    public static List<PendingField> findAll(PendingFieldRepository repository) throws SQLException {
+        List<PendingField> listPending = repository.findAll();
+        return listPending;
+    }
+
+    public static PendingField save(PendingField pending, PendingFieldRepository repository) throws SQLException {
+        PendingField n = repository.save(pending);
+        return n;
+    }
+
+    public static PendingField findByHashcode(String hashcode, PendingFieldRepository repository)
+    {
+        return repository.findByHashcode(hashcode);
+    }
+
 }

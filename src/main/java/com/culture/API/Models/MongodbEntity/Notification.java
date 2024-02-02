@@ -9,13 +9,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.culture.API.Models.Field;
 import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.NotificationRepository;
-import com.culture.API.Repository.OwnerRepository;
+import com.culture.API.Repository.PendingFieldRepository;
+import com.culture.API.Repository.FieldPicturesRepository;
+import com.culture.API.Repository.FieldLocalisationRepository;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-import com.culture.API.Models;
+import com.culture.API.Models.*;
 
 
 @Document(collection="Notification")
@@ -77,16 +79,22 @@ public class Notification {
         return repository.findByHashcode(hashcode);
     }
 
-    public static Field validate(NotificationRepository repository, FieldRepository fieldRepository, OwnerRepository ownerRepository, String hashcode){
+    public static Field validate(NotificationRepository repository, FieldRepository fieldRepository, PendingFieldRepository pendingRepository, String hashcode){
         Notification notif = repository.findByHashcode(hashcode);
+        PendingField pending = pendingRepository.findByHashcode(hashcode);
 
         Field f = new Field();
-            f.setOwner(ownerRepository.findByidOwner(notif.getIdSender()));
-            f.setHashcode(notif.getHashcode());
+            f.setOwner(notif.getOwner());
+            f.setHashcode(pending.getHashcode());
+            f.setLocation(pending.getLocation());
+            f.setDescription(pending.getDescription());
+            f.setArea(pending.getArea());
 
         try {
             Field f2 = Field.saveField(f, fieldRepository);
             repository.deleteByHashcode(notif.getHashcode());
+            pendingRepository.deleteByHashcode(hashcode);
+            
             return f2;
         } catch (Exception e) {
             return null;
@@ -94,9 +102,13 @@ public class Notification {
         
     }
 
-    public static void refuse(NotificationRepository repository, String hashcode){
+    public static void refuse(NotificationRepository repository, PendingFieldRepository pendingRepository, FieldPicturesRepository picturesRepository, FieldLocalisationRepository localisationRepository, String hashcode){
         try {
             repository.deleteByHashcode(hashcode);
+            pendingRepository.deleteByHashcode(hashcode);
+            picturesRepository.deleteByHashcode(hashcode);
+            localisationRepository.deleteByHashcode(hashcode);
+
         } catch (Exception e) {
 
         }
