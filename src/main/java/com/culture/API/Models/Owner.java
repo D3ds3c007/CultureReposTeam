@@ -34,7 +34,7 @@ public class Owner implements Serializable{
     private Wallet wallet;
 
     @Basic 
-    private Integer privilege;
+    private int privilege;
 
     @OneToMany(mappedBy = "owner" , fetch = FetchType.EAGER)
     @Transient
@@ -105,11 +105,11 @@ public class Owner implements Serializable{
         this.wallet = wallet;
     }
 
-    public Integer getPrivilege() {
+    public int getPrivilege() {
         return privilege;
     }
 
-    public void setPrivilege(Integer privilege) {
+    public void setPrivilege(int privilege) {
         this.privilege = privilege;
     }
 
