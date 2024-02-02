@@ -1,30 +1,26 @@
 package com.culture.API.Models;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import com.culture.API.Repository.WalletRepository;
+
+import jakarta.persistence.*;
 
 @Entity
-public class Wallet implements Serializable{
+public class Wallet implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idWallet;
-    
+    private Long id;
+
     @Basic
     private String number;
-    
+
     @Basic
     private double balance;
-    
+
     @OneToOne
     @JoinColumn(name = "idOwner")
     private Owner owner;
@@ -32,26 +28,17 @@ public class Wallet implements Serializable{
     @OneToMany(mappedBy = "wallet", fetch = FetchType.EAGER)
     private List<WalletTransaction> walletTransactions;
 
-    
     public Wallet() {
     }
 
-    public Wallet(int idWallet, String number, double balance, Owner owner,
-            List<WalletTransaction> walletTransactions) {
-        this.idWallet = idWallet;
+    public Wallet(String number, double balance, Owner owner) {
         this.number = number;
         this.balance = balance;
         this.owner = owner;
-        this.walletTransactions = walletTransactions;
     }
 
-
-    public int getIdWallet() {
-        return idWallet;
-    }
-
-    public void setIdWallet(int idWallet) {
-        this.idWallet = idWallet;
+    public Long getId() {
+        return id;
     }
 
     public String getNumber() {
@@ -74,8 +61,23 @@ public class Wallet implements Serializable{
         return owner;
     }
 
-    public void setUser(Owner owner) {
+    public void setOwner(Owner owner) {
         this.owner = owner;
     }
 
+    public static Wallet saveWallet(Wallet w, WalletRepository wr) {
+        return wr.save(w);
+    }
+
+    public static List<Wallet> findAllWallet(WalletRepository wr) {
+        return wr.findAll();
+    }
+
+    public static Wallet findById(Long id, WalletRepository wr) {
+        return wr.findById(id).orElse(null);
+    }
+
+    public void inscription(WalletRepository walletRepository) {
+        throw new UnsupportedOperationException("Unimplemented method 'Inscription'");
+    }
 }
