@@ -2,9 +2,17 @@ package com.culture.API.Models;
 
 import java.util.List;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import org.hibernate.annotations.Immutable;
+
 import com.culture.API.Repository.SimulationDetailsViewRepository;
 
+@Entity
+@Immutable
 public class SimulationDetailsView {
+
+    @Id
     private int idSimulation;
     private int idDetails;
     private String actionName;
