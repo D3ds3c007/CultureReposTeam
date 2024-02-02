@@ -21,7 +21,7 @@ import com.culture.API.Repository.ActionRepository;
 import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
 import com.culture.API.Repository.YieldRepository;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -97,8 +97,8 @@ public class Simulation implements Serializable{
         return s;
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public boolean insertSimulation( YieldRepository yr, SimulationRepository sr, SimulationDetailsRepository sdr,
+    @Transactional(rollbackOn = Exception.class)
+    public Simulation insertSimulation( YieldRepository yr, SimulationRepository sr, SimulationDetailsRepository sdr,
                                      ActionRepository ar , Plot plot, Culture culture, 
                                      Ressource ressource, int quantity ) throws Exception {
         try {
@@ -129,9 +129,9 @@ public class Simulation implements Serializable{
                 yield.saveYield(yr, yield);
             }
             
-            return true;
+            return simulation;
         } catch (Exception e) {
-            throw new RuntimeException("INSERT SIMULATION ERROR :"+ e);
+            throw new RuntimeException("INSERT SIMULATION ERROR : " + e);
         }
     }
     
