@@ -1,1 +1,1 @@
-psql -U postgres -d culture -f ./data.sql
+psql -U postgres -d culture -f ./simdata.sql
