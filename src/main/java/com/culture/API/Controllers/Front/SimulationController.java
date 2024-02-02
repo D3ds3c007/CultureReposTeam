@@ -12,6 +12,7 @@ import com.culture.API.Models.Culture;
 import com.culture.API.Models.Plot;
 import com.culture.API.Models.Ressource;
 import com.culture.API.Models.Simulation;
+import com.culture.API.Models.Request.AddSimulationRequest;
 import com.culture.API.Repository.ActionRepository;
 import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
@@ -35,14 +36,15 @@ public class SimulationController {
     
     @PostMapping("/insertSimulation")
     public ResponseEntity<Simulation> insertSimulation(
-        @RequestBody Plot plot, Culture culture, Ressource ressource, int quantity) {
+        @RequestBody AddSimulationRequest asr) {
         
         try {
             Simulation simulation = new Simulation();
-            simulation = simulation.insertSimulation(yr, sr, sdr, ar, plot, culture, ressource, quantity);
+            simulation = simulation.insertSimulation(yr, sr, sdr, ar, asr.idSimulation, asr.plot, asr.culture, asr.ressource, asr.quantity);
 
             return new ResponseEntity<>(simulation, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

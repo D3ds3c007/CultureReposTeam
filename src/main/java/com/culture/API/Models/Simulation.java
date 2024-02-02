@@ -21,9 +21,11 @@ import com.culture.API.Repository.ActionRepository;
 import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
 import com.culture.API.Repository.YieldRepository;
-import jakarta.transaction.Transactional;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 public class Simulation implements Serializable{
@@ -39,6 +41,7 @@ public class Simulation implements Serializable{
     @JoinColumn(name="idCulture")
     private Culture culture;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "UTC")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable=false)
     private Date dateSimulation;
@@ -97,20 +100,43 @@ public class Simulation implements Serializable{
         return s;
     }
 
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public Simulation insertSimulation( YieldRepository yr, SimulationRepository sr, SimulationDetailsRepository sdr,
-                                     ActionRepository ar , Plot plot, Culture culture, 
+                                     ActionRepository ar, Integer sid , Plot plot, Culture culture, 
                                      Ressource ressource, int quantity ) throws Exception {
         try {
+
             /* insert Simulation */
             Simulation simulation = new Simulation();
-            simulation.setPlot(plot);
-            simulation.setCulture(culture);
-            simulation.setDateSimulation(new Timestamp(System.currentTimeMillis()));
+            Simulation s = sid != null? sr.findById(sid).get() : null;
 
-            simulation = simulation.saveSimulation(simulation, sr);
+            double price =  ressource.getPricePerUnit() * quantity;
 
-            double price = ressource.getAction().getName().equals("Plantation") ? culture.getSeedPrice() * plot.getArea() : ressource.getPricePerUnit() * quantity;
+            if( s == null && ressource.getAction().getName().equals("Plantation")){
+                
+                /** check if able to continue simulation insertion */
+                Simulation lastSimulation = sr.findFirstByPlotOrderByDateSimulationDesc(plot);
+                if(
+                    sdr.findFirstBySimulationAndSimulation_PlotAndRessource_Action_Name(lastSimulation ,plot, "Plantation") != null &&
+                    sdr.findFirstBySimulationAndSimulation_PlotAndRessource_Action_Name(lastSimulation, plot, "Recolte") == null
+                ){
+                    throw new RuntimeException("NOT RECOLTED ON THIS PLOT");
+                }
+                
+                price =  culture.getSeedPrice() * plot.getArea();
+
+                simulation.setPlot(plot);
+                simulation.setCulture(culture);
+                simulation.setDateSimulation(new Timestamp(System.currentTimeMillis()));
+
+                simulation = simulation.saveSimulation(simulation, sr);
+            }else{
+                if(sdr.findFirstBySimulationAndRessource_Action_Name(s, "Recolte") == null){
+                    simulation = s ;
+                }else{
+                    throw new RuntimeException("CLOSED OR UNOPENED SIMULATION");
+                }
+            }
 
             /* insert details */
             SimulationDetails simulationDetails = new SimulationDetails();
@@ -131,6 +157,7 @@ public class Simulation implements Serializable{
                 yield.calculateQuantity(sdr, ar);
 
                 yield.saveYield(yr, yield);
+                System.out.println("YIELD : " + yield.getQuantity());
             }
             
             return simulation;

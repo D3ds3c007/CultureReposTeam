@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 import com.culture.API.Repository.SimulationDetailsRepository;
@@ -20,11 +21,11 @@ public class SimulationDetails implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDetails;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idSimulation")
     private Simulation simulation;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="idRessource")
     private Ressource ressource;
 

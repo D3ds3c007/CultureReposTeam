@@ -87,26 +87,33 @@ public class Yield implements Serializable{
         
         double yield_base = simulation.getCulture().getYieldQuantity() * simulation.getPlot().getArea();
         double quantity = yield_base;
+        System.out.println("PRICING -----------------------------");
+        System.out.println("YIELD BASE : ------------->> " + yield_base);
         List<Action> actions = ar.findAll();
 
         try {
             
             for (SimulationDetails simulationDetails : simDetailsList) {
                 if(simulationDetails.getRessource() != null){
-                    quantity += ( ( simulationDetails.getRessource().getPros() / 100 ) * simulationDetails.getQuantity() ) * quantity;
+                    double bonus = ( ( simulationDetails.getRessource().getPros() / 100 ) * simulationDetails.getQuantity() ) * yield_base;
+                    quantity += bonus;
+                    System.out.println("WITH : "+ simulationDetails.getRessource().getName() +" ------------->> PLUS : " + bonus);
                 }
             }
     
             for (Action action : actions) {
                 List<SimulationDetails> simDetails = sdr.findAllBySimulationAndRessource_Action(simulation, action);
                 if(simDetails.size() == 0){
-                    quantity -= quantity * (action.getCons() / 100);
+                    double minus = yield_base * (action.getCons() / 100);
+                    quantity -= minus;
+                    System.out.println("NO : "+ action.getName() +" ------------->> MINUS : " + minus);
                 }
             }
 
             this.setQuantity(quantity);
 
         } catch (Exception e) {
+            System.out.println("YIELD QUANTITY ERROR :"+ e.getMessage());
             throw new RuntimeException("YIELD QUANTITY ERROR :"+ e);
         }
     }
