@@ -2,6 +2,9 @@ package com.culture.API.Models;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import org.hibernate.annotations.JoinColumnOrFormula;
+
 import java.sql.Timestamp;
 
 import jakarta.persistence.Basic;
@@ -12,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -25,8 +29,9 @@ public class Simulation implements Serializable{
     @JoinColumn(name="idPlot")
     private Plot plot;
 
-    @Basic
-    private int idCulture;
+    @ManyToOne
+    @JoinColumn(name="idCulture")
+    private Culture culture;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable=false)
@@ -48,12 +53,12 @@ public class Simulation implements Serializable{
         this.plot = plot;
     }
 
-    public int getIdCulture() {
-        return idCulture;
+    public Culture getCulture() {
+        return this.culture;
     }
 
-    public void setIdCulture(int idCulture) {
-        this.idCulture = idCulture;
+    public void setCulture(Culture culture) {
+        this.culture = culture;
     }
 
     public Date getDateSimulation() {
@@ -64,10 +69,10 @@ public class Simulation implements Serializable{
         this.dateSimulation = dateSimulation;
     }
 
-    public Simulation(int idSimulation, Plot plot, int idCulture, Timestamp dateSimulation) {
+    public Simulation(int idSimulation, Plot plot, Culture culture, Timestamp dateSimulation) {
         this.idSimulation = idSimulation;
         this.plot = plot;
-        this.idCulture = idCulture;
+        this.culture = culture;
         this.dateSimulation = dateSimulation;
     }
 

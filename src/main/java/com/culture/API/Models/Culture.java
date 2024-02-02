@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Culture implements Serializable{
@@ -44,6 +45,7 @@ public class Culture implements Serializable{
     @ManyToOne()
     @JoinColumn(name="idCategory")
     private Category category;
+
 
     public Culture(){
 

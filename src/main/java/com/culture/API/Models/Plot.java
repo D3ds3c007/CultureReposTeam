@@ -9,7 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
+
 import com.culture.API.Repository.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Plot implements Serializable {
@@ -28,6 +31,8 @@ public class Plot implements Serializable {
     @JoinColumn(name="idGroundType")
     private GroundType groundType;
 
+
+    
     public int getIdPlot() {
         return idPlot;
     }
@@ -50,6 +55,16 @@ public class Plot implements Serializable {
 
     public void setGroundType(GroundType groundType) {
         this.groundType = groundType;
+    }
+
+    public Field getField()
+    {
+        return this.field;
+    }
+
+    public void setField(Field f)
+    {
+        this.field = f;
     }
 
     public Plot(){
