@@ -2,6 +2,11 @@ package com.culture.API.Models;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
+
+import com.culture.API.Repository.ActionRepository;
+import com.culture.API.Repository.SimulationDetailsRepository;
+import com.culture.API.Repository.YieldRepository;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
@@ -28,7 +33,7 @@ public class Yield implements Serializable{
     private Timestamp dateYield;
 
     @Basic
-    private int quantity;
+    private double quantity;
 
     public int getIdYield() {
         return idYield;
@@ -42,7 +47,7 @@ public class Yield implements Serializable{
         return simulation;
     }
 
-    public void setIdSimulation(Simulation simulation) {
+    public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
     }
 
@@ -54,11 +59,11 @@ public class Yield implements Serializable{
         this.dateYield = dateYield;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    private void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
@@ -71,6 +76,39 @@ public class Yield implements Serializable{
 
     public Yield() {
 
-    } 
+    }
+
+    public Yield saveYield(YieldRepository yr, Yield yield){
+        return yr.save(yield);
+    }
+
+    public void calculateQuantity(SimulationDetailsRepository sdr, ActionRepository ar) {
+        List<SimulationDetails> simDetailsList = sdr.findAllBySimulation(simulation);
+        
+        double yield_base = simulation.getCulture().getYieldQuantity() * simulation.getPlot().getArea();
+        double quantity = yield_base;
+        List<Action> actions = ar.findAll();
+
+        try {
+            
+            for (SimulationDetails simulationDetails : simDetailsList) {
+                if(simulationDetails.getRessource() != null){
+                    quantity += ( ( simulationDetails.getRessource().getPros() / 100 ) * simulationDetails.getQuantity() ) * quantity;
+                }
+            }
+    
+            for (Action action : actions) {
+                List<SimulationDetails> simDetails = sdr.findAllBySimulationAndRessource_Action(simulation, action);
+                if(simDetails.size() == 0){
+                    quantity -= quantity * (action.getCons() / 100);
+                }
+            }
+
+            this.setQuantity(quantity);
+
+        } catch (Exception e) {
+            throw new RuntimeException("YIELD QUANTITY ERROR :"+ e);
+        }
+    }
 
 }
