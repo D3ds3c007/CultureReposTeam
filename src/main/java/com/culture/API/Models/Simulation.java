@@ -110,12 +110,16 @@ public class Simulation implements Serializable{
 
             simulation = simulation.saveSimulation(simulation, sr);
 
+            double price = ressource.getAction().getName().equals("Plantation") ? culture.getSeedPrice() * plot.getArea() : ressource.getPricePerUnit() * quantity;
+
             /* insert details */
             SimulationDetails simulationDetails = new SimulationDetails();
             simulationDetails.setRessource(ressource);
             simulationDetails.setSimulation(simulation);
             simulationDetails.setQuantity(quantity);
-            simulationDetails.setPrice(ressource.getPricePerUnit() * quantity);
+            simulationDetails.setPrice(price);
+
+            /**plot.getField().getOwner().getWallet(). transac(  ); */
 
             simulationDetails = simulationDetails.saveSimulationDetails(simulationDetails, sdr);
 
