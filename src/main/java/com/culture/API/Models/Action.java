@@ -16,7 +16,9 @@ public class Action implements Serializable{
 
     @Basic
     private String name;
-    
+
+    @Basic
+    private double cons;
 
     public int getIdAction() {
         return idAction;
@@ -32,6 +34,14 @@ public class Action implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getCons(){
+        return this.cons;
+    }
+
+    public void setCons(double cons){
+        this.cons = cons;
     }
 
     public Action(int idAction, String name) {
