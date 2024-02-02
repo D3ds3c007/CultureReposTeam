@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.culture.API.Models.Owner;
+import com.culture.API.Models.DTO.OwnerDTO;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -15,6 +18,12 @@ public class Message {
 
     @Basic
     private int idReceiver;
+
+    @Basic
+    private OwnerDTO senderObject;
+
+    @Basic
+    private OwnerDTO receiverObject;
 
     @Basic
     private String body;
@@ -49,6 +58,25 @@ public class Message {
 
     public String getBody() {
         return body;
+    }
+
+    
+    
+
+    public OwnerDTO getSenderObject() {
+        return senderObject;
+    }
+
+    public void setSenderObject(OwnerDTO senderObject) {
+        this.senderObject = senderObject;
+    }
+
+    public OwnerDTO getReceiverObject() {
+        return receiverObject;
+    }
+
+    public void setReceiverObject(OwnerDTO receiverObject) {
+        this.receiverObject = receiverObject;
     }
 
     public void setBody(String body) {
