@@ -1,6 +1,7 @@
 package com.culture.API.Controllers.Front;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,7 @@ public class WebSocketController {
 
         message.setSenderObject(senderDTO);
         message.setReceiverObject(receiverDTO);
+        message.setDate(new Date());
 
         try {
             m = messageRepository.save(message);
