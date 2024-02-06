@@ -3,7 +3,6 @@ package com.culture.API.Models;
 import java.util.List;
 
 import com.culture.API.Repository.CategoryRepository;
-import com.culture.API.Repository.CultureRepository;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;

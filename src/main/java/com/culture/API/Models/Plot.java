@@ -1,6 +1,7 @@
 package com.culture.API.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -9,10 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Transient;
 
 import com.culture.API.Repository.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Plot implements Serializable {
@@ -30,7 +29,6 @@ public class Plot implements Serializable {
     @ManyToOne
     @JoinColumn(name="idGroundType")
     private GroundType groundType;
-
 
     
     public int getIdPlot() {
@@ -81,6 +79,12 @@ public class Plot implements Serializable {
     public static Plot savePlot(Plot plot, PlotRepository plotRepository){
         Plot plot2 = plotRepository.save(plot);
         return plot2;
+    }
+
+    public static List<Plot> findAll(PlotRepository pr) throws Exception
+    {
+        List<Plot> c = pr.findAll();
+        return c;
     }
 
 }

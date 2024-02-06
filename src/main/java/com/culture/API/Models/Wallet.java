@@ -5,10 +5,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.culture.API.Repository.WalletRepository;
 import com.culture.API.Repository.WalletTransactionRepository;
 
@@ -21,7 +17,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.transaction.Transactional;
 
 @Entity
 public class Wallet implements Serializable{
