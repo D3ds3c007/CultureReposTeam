@@ -1,6 +1,7 @@
 package com.culture.API.Controllers.Front;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,9 @@ import com.culture.API.Models.DTO.OwnerDTO;
 import com.culture.API.Models.MongodbEntity.Message;
 import com.culture.API.Repository.MessageRepository;
 import com.culture.API.Repository.OwnerRepository;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
 @RestController
 @RequestMapping("/api")
 public class WebSocketController {
@@ -75,6 +78,7 @@ public class WebSocketController {
 
         message.setSenderObject(senderDTO);
         message.setReceiverObject(receiverDTO);
+        message.setDate(new Date());
 
         try {
             m = messageRepository.save(message);
