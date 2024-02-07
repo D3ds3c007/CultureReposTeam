@@ -55,10 +55,10 @@ public class Plot implements Serializable {
         this.groundType = groundType;
     }
 
-    public Field getField()
-    {
-        return this.field;
-    }
+    // public Field getField()
+    // {
+    //     return this.field;
+    // }
 
     public void setField(Field f)
     {
