@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -34,6 +35,16 @@ public class OwnerController {
         catch(Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/owner") 
+    public ResponseEntity<Owner> getOwner(@RequestParam int id)
+    {
+        try {
+            Owner o = Owner.findOwnerById(id, ownerRepository);
+            return new ResponseEntity<>(o, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 

@@ -91,7 +91,7 @@ public class Owner implements Serializable{
         this.email = email;
     }
 
-    public String getPwd() {
+    private String getPwd() {
         return pwd;
     }
 
@@ -137,6 +137,12 @@ public class Owner implements Serializable{
     }
     public static Owner getOwner(OwnerRepository or,String email, String pwd) throws SQLException{
         Owner ow = or.findByEmailAndPwd(email,pwd);
+        return ow;
+    }
+
+    public static Owner findOwnerById(int id, OwnerRepository or)
+    {
+        Owner ow = or.findByidOwner(id);
         return ow;
     }
 
