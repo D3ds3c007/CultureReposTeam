@@ -115,10 +115,6 @@ public class Owner implements Serializable{
         this.privilege = privilege;
     }
 
-    public List<Field> getFields() {
-        return fields;
-    }
-
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
