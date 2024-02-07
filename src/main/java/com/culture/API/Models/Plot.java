@@ -87,4 +87,11 @@ public class Plot implements Serializable {
         return c;
     }
 
+
+    public Field getField(FieldRepository fr)
+    {
+        Field fields = fr.findByPlots(this);
+        return fields;
+    }
+
 }

@@ -16,6 +16,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 import com.culture.API.Repository.ActionRepository;
+import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
 import com.culture.API.Repository.WalletRepository;
@@ -101,7 +102,7 @@ public class Simulation implements Serializable{
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Simulation insertSimulation( WalletRepository wr, WalletTransactionRepository wtr,
+    public Simulation insertSimulation( FieldRepository fr, WalletRepository wr, WalletTransactionRepository wtr,
                                      YieldRepository yr, SimulationRepository sr, SimulationDetailsRepository sdr,
                                      ActionRepository ar, Integer sid , Plot plot, Culture culture, 
                                      Ressource ressource, int quantity ) throws Exception {
@@ -147,7 +148,7 @@ public class Simulation implements Serializable{
             simulationDetails.setPrice(price);
 
             /**plot.getField().getOwner().getWallet(). transac(  ); */
-            simulation.getPlot().getField().getOwner().getWallet().createTransaction(wtr, wr, price, -1);
+            simulation.getPlot().getField(fr).getOwner().getWallet().createTransaction(wtr, wr, price, -1);
 
             simulationDetails = simulationDetails.saveSimulationDetails(simulationDetails, sdr);
 

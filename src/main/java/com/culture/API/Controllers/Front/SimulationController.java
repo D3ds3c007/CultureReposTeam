@@ -14,6 +14,7 @@ import com.culture.API.Models.Ressource;
 import com.culture.API.Models.Simulation;
 import com.culture.API.Models.Request.AddSimulationRequest;
 import com.culture.API.Repository.ActionRepository;
+import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.SimulationDetailsRepository;
 import com.culture.API.Repository.SimulationRepository;
 import com.culture.API.Repository.YieldRepository;
@@ -40,6 +41,8 @@ public class SimulationController {
     WalletRepository wr;
     @Autowired
     WalletTransactionRepository wtr;
+    @Autowired
+    FieldRepository fr;
     
     @PostMapping("/insertSimulation")
     public ResponseEntity<Simulation> insertSimulation(
@@ -47,7 +50,7 @@ public class SimulationController {
         
         try {
             Simulation simulation = new Simulation();
-            simulation = simulation.insertSimulation(wr, wtr, yr, sr, sdr, ar, asr.idSimulation, asr.plot, asr.culture, asr.ressource, asr.quantity);
+            simulation = simulation.insertSimulation(fr, wr, wtr, yr, sr, sdr, ar, asr.idSimulation, asr.plot, asr.culture, asr.ressource, asr.quantity);
 
             return new ResponseEntity<>(simulation, HttpStatus.CREATED);
         } catch (Exception e) {

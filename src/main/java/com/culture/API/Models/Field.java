@@ -124,4 +124,9 @@ public class Field implements Serializable{
         return listFields;
     }
 
+    public static List<Field> findFieldByOwner(FieldRepository fi, Owner owner)
+    {
+        List<Field> listField = fi.findByOwner(owner);
+        return listField;
+    }
 }
