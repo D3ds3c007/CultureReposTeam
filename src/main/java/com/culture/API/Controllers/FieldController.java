@@ -2,6 +2,8 @@ package com.culture.API.Controllers;
 
 import com.culture.API.Models.Field;
 import com.culture.API.Models.Owner;
+import com.culture.API.Models.MongodbEntity.FieldPictures;
+import com.culture.API.Repository.FieldPicturesRepository;
 import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.OwnerRepository;
 
@@ -31,6 +33,9 @@ public class FieldController {
 
     @Autowired
     private OwnerRepository ownerRepository;
+
+    @Autowired
+    FieldPicturesRepository picturesRepository;
 
     @GetMapping("/fields")
     public ResponseEntity<List<Field>>  getAllFields() {
@@ -62,6 +67,18 @@ public class FieldController {
         try{
             Field fi = Field.saveField(field, fieldRepository);
             return new ResponseEntity<>(fi,HttpStatus.OK);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/picture")
+    public ResponseEntity<FieldPictures> getPicture(@RequestParam(value = "hashcode") String hashcode) {
+        try{
+            FieldPictures pic = FieldPictures.findByHashcode(hashcode, picturesRepository);
+            return new ResponseEntity<>(pic,HttpStatus.OK);
         }
         catch(Exception e){
             System.out.println(e.getMessage());

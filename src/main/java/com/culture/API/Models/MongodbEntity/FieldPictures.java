@@ -56,7 +56,7 @@ public class FieldPictures {
 
     public static FieldPictures findByHashcode(String hashcode, FieldPicturesRepository repository)
     {
-        return repository.findByHashcode(hashcode);
+        return repository.findByhashcode(hashcode);
     }
 
 }
