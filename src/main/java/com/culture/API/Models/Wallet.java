@@ -41,6 +41,13 @@ public class Wallet implements Serializable{
     public Wallet() {
     }
 
+
+    public Wallet(String number, double balance, Owner owner) {
+        this.number = number;
+        this.balance = balance;
+        this.owner = owner;
+    }
+    
     public Wallet(int idWallet, String number, double balance, Owner owner,
             List<WalletTransaction> walletTransactions) {
         this.idWallet = idWallet;
