@@ -1,4 +1,4 @@
-package com.culture.API.Controllers;
+package com.culture.API.Controllers.Front;
 import com.culture.API.Models.Wallet;
 import com.culture.API.Repository.WalletRepository;
 
