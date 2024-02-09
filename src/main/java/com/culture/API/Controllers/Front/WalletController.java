@@ -3,6 +3,7 @@ package com.culture.API.Controllers.Front;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,5 +62,30 @@ public class WalletController {
 
         }
 	}
+
+    @GetMapping("/wallet") 
+    public ResponseEntity<List<Wallet>> getAllWallet(){
+        try{
+            List<Wallet> w = Wallet.findAllWallet(wr);
+            return new ResponseEntity<>(w, HttpStatus.OK);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/wallets")
+    public ResponseEntity<Wallet> insertWallet(@RequestBody Wallet w) {
+        try{
+            Wallet wt = Wallet.saveWallet(w, wr);
+            return new ResponseEntity<>(wt,HttpStatus.OK);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
     
 }

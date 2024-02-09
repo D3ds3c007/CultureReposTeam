@@ -110,5 +110,13 @@ public class Wallet implements Serializable{
             } 
 
 	}
+    public static Wallet saveWallet(Wallet w, WalletRepository wr) {
+        return wr.save(w);
+    }
+
+    public static List<Wallet> findAllWallet(WalletRepository wr) {
+        return wr.findAll();
+    }
+
 
 }
