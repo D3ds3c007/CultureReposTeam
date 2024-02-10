@@ -45,6 +45,7 @@ public class Culture implements Serializable{
     @JoinColumn(name="idCategory")
     private Category category;
 
+
     public Culture(){
 
     }

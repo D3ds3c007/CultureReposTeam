@@ -1,6 +1,7 @@
 package com.culture.API.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
 import com.culture.API.Repository.*;
 
 @Entity
@@ -28,6 +30,7 @@ public class Plot implements Serializable {
     @JoinColumn(name="idGroundType")
     private GroundType groundType;
 
+    
     public int getIdPlot() {
         return idPlot;
     }
@@ -52,6 +55,16 @@ public class Plot implements Serializable {
         this.groundType = groundType;
     }
 
+    // public Field getField()
+    // {
+    //     return this.field;
+    // }
+
+    public void setField(Field f)
+    {
+        this.field = f;
+    }
+
     public Plot(){
 
     }
@@ -66,6 +79,19 @@ public class Plot implements Serializable {
     public static Plot savePlot(Plot plot, PlotRepository plotRepository){
         Plot plot2 = plotRepository.save(plot);
         return plot2;
+    }
+
+    public static List<Plot> findAll(PlotRepository pr) throws Exception
+    {
+        List<Plot> c = pr.findAll();
+        return c;
+    }
+
+
+    public Field getField(FieldRepository fr)
+    {
+        Field fields = fr.findByPlots(this);
+        return fields;
     }
 
 }

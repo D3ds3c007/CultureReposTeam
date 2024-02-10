@@ -1,6 +1,7 @@
 package com.culture.API.Controllers;
 
 import com.culture.API.Models.Owner;
+import com.culture.API.Models.DTO.OwnerDTO;
 import com.culture.API.Repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,9 +27,9 @@ public class OwnerController {
     // private FieldRepository fieldRepository;
 
     @GetMapping("/owners") 
-    public ResponseEntity<List<Owner>> getAllOwner(){
+    public ResponseEntity<List<OwnerDTO>> getAllOwner(){
         try{
-            List<Owner> o = Owner.findAllOwner(ownerRepository);
+            List<OwnerDTO> o = Owner.findAllWithoutAdmin(ownerRepository);
             return new ResponseEntity<>(o, HttpStatus.OK);
         }
         catch(Exception e){
@@ -35,6 +37,18 @@ public class OwnerController {
             return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/owner") 
+    public ResponseEntity<Owner> getOwner(@RequestParam int id)
+    {
+        try {
+            Owner o = Owner.findOwnerById(id, ownerRepository);
+            return new ResponseEntity<>(o, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    
 
     @PostMapping("/login")
     public ResponseEntity<Owner> login(@RequestBody Owner o) {

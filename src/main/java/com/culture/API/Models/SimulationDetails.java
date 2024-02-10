@@ -1,6 +1,7 @@
 package com.culture.API.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
@@ -9,7 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+
+import com.culture.API.Repository.SimulationDetailsRepository;
 
 @Entity
 public class SimulationDetails implements Serializable{
@@ -17,13 +19,13 @@ public class SimulationDetails implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDetails;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idSimulation")
     private Simulation simulation;
 
     @ManyToOne
-    @JoinColumn(name="idAction")
-    private Action action;
+    @JoinColumn(name="idRessource")
+    private Ressource ressource;
 
     @Basic
     private int quantity;
@@ -47,12 +49,12 @@ public class SimulationDetails implements Serializable{
         this.simulation = simulation;
     }
 
-    public Action getAction() {
-        return action;
+    public Ressource getRessource() {
+        return ressource;
     }
 
-    public void setAction(Action action) {
-        this.action = action;
+    public void setRessource(Ressource ressource) {
+        this.ressource = ressource;
     }
 
     public int getQuantity() {
@@ -71,10 +73,10 @@ public class SimulationDetails implements Serializable{
         this.price = price;
     } 
 
-    public SimulationDetails(int idDetails, Simulation simulation, Action action, int quantity, double price) {
+    public SimulationDetails(int idDetails, Simulation simulation, Ressource ressource, int quantity, double price) {
         this.idDetails = idDetails;
         this.simulation = simulation;
-        this.action = action;
+        this.ressource = ressource;
         this.quantity = quantity;
         this.price = price;
     }
@@ -82,6 +84,16 @@ public class SimulationDetails implements Serializable{
     public SimulationDetails()
     {
         
+    }
+
+    public SimulationDetails saveSimulationDetails(SimulationDetails simulationDetails, SimulationDetailsRepository sdr) throws Exception{
+        SimulationDetails s = sdr.save(simulationDetails);
+        return s;
+    }
+
+    public List<SimulationDetails> findAllSimulationDetails(SimulationDetailsRepository sdr) throws Exception{
+        List<SimulationDetails> s = sdr.findAll();
+        return s;
     }
     
 }

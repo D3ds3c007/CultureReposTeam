@@ -1,11 +1,24 @@
 package com.culture.API.Models;
 
+import java.util.List;
+
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import org.hibernate.annotations.Immutable;
+
+import com.culture.API.Repository.SimulationDetailsViewRepository;
+
+@Entity
+@Immutable
 public class SimulationDetailsView {
+
+    @Id
     private int idSimulation;
     private int idDetails;
     private String actionName;
     private int quantity;
     private double price;
+    
     public int getIdSimulation() {
         return idSimulation;
     }
@@ -43,7 +56,11 @@ public class SimulationDetailsView {
         this.quantity = quantity;
         this.price = price;
     }
-    public SimulationDetailsView() {
+    public SimulationDetailsView() { }
+
+    public List<SimulationDetailsView> findAllSimulationDetailsViews(SimulationDetailsViewRepository sdr) {
+        List<SimulationDetailsView> s = sdr.findAll();
+        return s;
     }
 
 }

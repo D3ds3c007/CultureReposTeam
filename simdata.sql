@@ -24,41 +24,12 @@ INSERT INTO plot (id_field, area, id_ground_type) VALUES
 (3, 12.0, 3);
 
 -- Insertion des données dans la table "action"
-INSERT INTO action (name) VALUES
-('Plantation'),
-('Arrosage'),
-('Insecticide');
-
--- Insertion des données dans la table "simulation"
-INSERT INTO simulation (id_plot, id_culture, date_simulation) VALUES
-(1, 1, '2024-01-01 10:00:00'),
-(2, 2, '2024-01-10 12:30:00'),
-(1, 1, '2024-01-21 10:00:00'),
-(2, 2, '2024-02-02 12:30:00'),
-(1, 1, '2024-02-04 10:00:00'),
-(2, 2, '2024-02-11 12:30:00'),
-(1, 1, '2024-02-17 10:00:00'),
-(2, 2, '2024-03-28 12:30:00'),
-(3, 1, '2024-04-03 15:45:00');
-
--- Insertion des données dans la table "simulation"
-INSERT INTO simulation (id_plot, id_culture, date_simulation) VALUES
-(1, 1, '2024-01-01 10:00:00'),
-(2, 2, '2024-02-02 12:30:00'),
-(3, 1, '2024-03-03 15:45:00'),
-(4, 3, '2024-04-04 18:00:00');
-
--- Insertion des données dans la table "simulation_details"
-INSERT INTO simulation_details (id_simulation, id_action, quantity, price) VALUES
-(1, 1, 100, 50.0),
-(2, 2, 1, 10.0),
-(3, 3, 80, 100.0),
-(4, 1, 120, 60.0),
-(5, 2, 2, 20.0),
-(6, 3, 70, 90.0),
-(7, 1, 90, 45.0),
-(8, 2, 3, 30.0),
-(9, 3, 60, 80.0);
+INSERT INTO action (name, cons) VALUES
+('Plantation', 0 ),
+('Arrosage', 50 ),
+('Insecticide', 10 ),
+('Recolte',	0 ),
+('Ajout Engrais', 20 );
 
 -- Insertion des données dans la table "field"
 INSERT INTO field (latitude, longitude, id_owner) VALUES
@@ -79,9 +50,13 @@ INSERT INTO plot (id_field, area, id_ground_type) VALUES
 (2, 15.2, 1),
 (3, 12.0, 3);
 
--- Insertion des données dans la table "yield"
-INSERT INTO yield (id_simulation, date_yield, quantity) VALUES
-(1, '2024-01-15 14:30:00', 150),
-(2, '2024-02-20 16:45:00', 130),
-(3, '2024-03-25 20:00:00', 180),
-(4, '2024-04-30 22:15:00', 160);
+INSERT INTO Ressource (name, price_per_unit, id_action, pros) VALUES
+('human ressource',	0, 1, 0),
+('water', 200, 2, 5),
+('Insecticide 1', 500, 3, 5),
+('Insecticide 2', 1000, 3, 10),
+('Insecticide 3',2000, 3, 15),
+('human ressource', 0, 4, 0),
+('Engrais 1', 1200, 5, 10),
+('Engrais 2', 2000, 5, 20),
+('Engrais 3', 3000, 5, 30);

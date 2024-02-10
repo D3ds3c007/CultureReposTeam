@@ -2,8 +2,10 @@ package com.culture.API.Models;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.culture.API.Models.DTO.OwnerDTO;
 import com.culture.API.Repository.OwnerRepository;
 
 import jakarta.persistence.Basic;
@@ -89,7 +91,7 @@ public class Owner implements Serializable{
         this.email = email;
     }
 
-    public String getPwd() {
+    private String getPwd() {
         return pwd;
     }
 
@@ -113,10 +115,6 @@ public class Owner implements Serializable{
         this.privilege = privilege;
     }
 
-    public List<Field> getFields() {
-        return fields;
-    }
-
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
@@ -125,12 +123,22 @@ public class Owner implements Serializable{
         Owner ow = or.save(o);
         return ow;
     }
-    public static List<Owner> findAllOwner(OwnerRepository or) throws SQLException{
-        List<Owner> o = or.findAll();
-        return o;
+    public static List<OwnerDTO> findAllWithoutAdmin(OwnerRepository or) throws SQLException{
+        List<Owner> o = or.findAllWithoutAdmin();
+        List<OwnerDTO> od = new ArrayList<>();
+        for(Owner ow : o){
+            od.add(new OwnerDTO(ow.getIdOwner(),ow.getName(),ow.getEmail()));
+        }
+        return od;
     }
     public static Owner getOwner(OwnerRepository or,String email, String pwd) throws SQLException{
         Owner ow = or.findByEmailAndPwd(email,pwd);
+        return ow;
+    }
+
+    public static Owner findOwnerById(int id, OwnerRepository or)
+    {
+        Owner ow = or.findByidOwner(id);
         return ow;
     }
 
