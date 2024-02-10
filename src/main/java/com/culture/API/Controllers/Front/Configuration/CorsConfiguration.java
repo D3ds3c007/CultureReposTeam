@@ -14,7 +14,7 @@ public class CorsConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/websocket/**")
-                        .allowedOrigins("http://localhost:3000") // Add your frontend URL here
+                        .allowedOrigins("https://kultora-frontoffice.netlify.app/") // Add your frontend URL here
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true)
                         .maxAge(3600);
