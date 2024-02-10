@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.culture.API.Models.Culture;
-import com.culture.API.Models.Plot;
-import com.culture.API.Models.Ressource;
 import com.culture.API.Models.Simulation;
 import com.culture.API.Models.Request.AddSimulationRequest;
 import com.culture.API.Repository.ActionRepository;
