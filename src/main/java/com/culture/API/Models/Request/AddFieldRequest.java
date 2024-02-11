@@ -2,6 +2,7 @@ package com.culture.API.Models.Request;
 
 
 public class AddFieldRequest {
+    private int idOwner;
     private double area;
     private String description;
     private String location;
@@ -13,6 +14,18 @@ public class AddFieldRequest {
     
     public AddFieldRequest() {
     }
+
+    
+    public int getIdOwner() {
+        return idOwner;
+    }
+
+
+    public void setIdOwner(int idOwner) {
+        this.idOwner = idOwner;
+    }
+
+
     public AddFieldRequest(double area, String description, String location, int plotsNumber, int groundType,
             String[] pictures, Location[] localisation) {
         this.area = area;

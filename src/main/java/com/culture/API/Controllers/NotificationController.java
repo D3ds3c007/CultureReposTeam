@@ -17,6 +17,7 @@ import com.culture.API.Models.Field;
 import com.culture.API.Models.Owner;
 import com.culture.API.Models.DTO.OwnerDTO;
 import com.culture.API.Models.MongodbEntity.FieldLocalisation;
+import com.culture.API.Models.MongodbEntity.FieldPictures;
 import com.culture.API.Models.MongodbEntity.Notification;
 import com.culture.API.Models.MongodbEntity.PendingField;
 import com.culture.API.Models.Request.AddFieldRequest;
@@ -76,7 +77,7 @@ public class NotificationController {
 
         try {
         System.out.println(request.getLocalisation().length);
-            Owner o = Owner.findOwnerById(1, ownerRepository);
+            Owner o = Owner.findOwnerById(request.getIdOwner(), ownerRepository);
 
             OwnerDTO oDto = new OwnerDTO(o.getIdOwner(), o.getName(), o.getEmail());
 
@@ -87,6 +88,12 @@ public class NotificationController {
                 p.setLocation(request.getLocation());
                 p.setHashcode(hashcode);
                 pendingdRepository.save(p);
+
+            FieldPictures fp = new FieldPictures();
+            fp.setHashcode(hashcode);
+            fp.setPicBase64(request.getPictures()[0]);
+
+            FieldPictures  fps= fp.save(fp, picturesdRepository);
 
 
             for (int i = 0; i < request.getLocalisation().length; i++) {
