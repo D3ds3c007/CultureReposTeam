@@ -14,9 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.culture.API.Models.Field;
+import com.culture.API.Models.Owner;
+import com.culture.API.Models.DTO.OwnerDTO;
+import com.culture.API.Models.MongodbEntity.FieldLocalisation;
 import com.culture.API.Models.MongodbEntity.Notification;
+import com.culture.API.Models.MongodbEntity.PendingField;
+import com.culture.API.Models.Request.AddFieldRequest;
 import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.NotificationRepository;
+import com.culture.API.Repository.OwnerRepository;
 import com.culture.API.Repository.PendingFieldRepository;
 import com.culture.API.Repository.FieldLocalisationRepository;
 import com.culture.API.Repository.FieldPicturesRepository;
@@ -45,6 +51,12 @@ public class NotificationController {
     @Autowired
     private FieldLocalisationRepository localisationdRepository;
 
+    @Autowired
+    private OwnerRepository ownerRepository;
+
+    @Autowired
+    private FieldLocalisationRepository localisationRepository;
+
     @GetMapping("/notifications")
     public  ResponseEntity<List<Notification>> getAllNotification() {
         try {
@@ -56,24 +68,52 @@ public class NotificationController {
     }
 
     @PostMapping("/notification")
-    public  ResponseEntity<Notification> insertNotif(@RequestBody Notification notif) {
+    public ResponseEntity<Notification> insertNotif(@RequestBody AddFieldRequest request) {
 
         String hashcode = HashGenerator.generateCode();
-        notif.setHashcode(hashcode);
+
+        System.out.println(request.getLocalisation().length);
 
         try {
-            notif.setDate(new Timestamp(System.currentTimeMillis()));
-            Notification n = repository.save(notif);
-            return new ResponseEntity<>(n, HttpStatus.OK);
+        System.out.println(request.getLocalisation().length);
+            Owner o = Owner.findOwnerById(1, ownerRepository);
+
+            OwnerDTO oDto = new OwnerDTO(o.getIdOwner(), o.getName(), o.getEmail());
+
+            PendingField p = new PendingField();
+                p.setArea(request.getArea());
+                p.setOwner(oDto);
+                p.setDescription(request.getDescription());
+                p.setLocation(request.getLocation());
+                p.setHashcode(hashcode);
+                pendingdRepository.save(p);
+
+
+            for (int i = 0; i < request.getLocalisation().length; i++) {
+                FieldLocalisation l = new FieldLocalisation();
+                    l.setHashcode(hashcode);
+                    l.setLatitude(request.getLocalisation()[i].getPosition().getLat());
+                    l.setLongitude(request.getLocalisation()[i].getPosition().getLng());
+                localisationdRepository.save(l);
+            }
+
+            Notification notify = new Notification();
+              notify.setHashcode(hashcode);
+              notify.setOwner(oDto);
+              notify.setDate(new Timestamp(System.currentTimeMillis()));
+
+             Notification n = Notification.save(notify, repository);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @GetMapping("/validate")
     public  ResponseEntity<Field> validateNotif(@RequestParam(value = "hashcode") String hashcode) {
         try {
-            Field f = Notification.validate(repository, fieldrepository, pendingdRepository, hashcode);
+            Field f = Notification.validate(ownerRepository,repository, fieldrepository, pendingdRepository, hashcode);
             return new ResponseEntity<>(f, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());

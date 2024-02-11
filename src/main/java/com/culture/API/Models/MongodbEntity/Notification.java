@@ -7,8 +7,10 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.culture.API.Models.Field;
+import com.culture.API.Models.DTO.OwnerDTO;
 import com.culture.API.Repository.FieldRepository;
 import com.culture.API.Repository.NotificationRepository;
+import com.culture.API.Repository.OwnerRepository;
 import com.culture.API.Repository.PendingFieldRepository;
 import com.culture.API.Repository.FieldPicturesRepository;
 import com.culture.API.Repository.FieldLocalisationRepository;
@@ -23,7 +25,7 @@ import com.culture.API.Models.*;
 @Document(collection="Notification")
 public class Notification {
     
-    private Owner owner;
+    private OwnerDTO owner;
 
     @Basic
     private String hashcode;
@@ -31,7 +33,7 @@ public class Notification {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public Notification(Owner owner, String hashcode, Date date) {
+    public Notification(OwnerDTO owner, String hashcode, Date date) {
         this.owner = owner;
         this.hashcode = hashcode;
         this.date = date;
@@ -40,11 +42,11 @@ public class Notification {
         
     }
 
-    public Owner getOwner() {
+    public OwnerDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(OwnerDTO owner) {
         this.owner = owner;
     }
 
@@ -79,12 +81,12 @@ public class Notification {
         return repository.findByHashcode(hashcode);
     }
 
-    public static Field validate(NotificationRepository repository, FieldRepository fieldRepository, PendingFieldRepository pendingRepository, String hashcode){
+    public static Field validate(OwnerRepository ownerRepository, NotificationRepository repository, FieldRepository fieldRepository, PendingFieldRepository pendingRepository, String hashcode){
         Notification notif = repository.findByHashcode(hashcode);
         PendingField pending = pendingRepository.findByHashcode(hashcode);
-
+        Owner owner = Owner.findOwnerById(notif.getOwner().getIdOwner(), ownerRepository);
         Field f = new Field();
-            f.setOwner(notif.getOwner());
+            f.setOwner(owner);
             f.setHashcode(pending.getHashcode());
             f.setLocation(pending.getLocation());
             f.setDescription(pending.getDescription());

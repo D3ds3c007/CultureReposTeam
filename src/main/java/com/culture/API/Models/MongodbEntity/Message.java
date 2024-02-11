@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.culture.API.Models.Owner;
 import com.culture.API.Models.DTO.OwnerDTO;
 
 import jakarta.persistence.Basic;

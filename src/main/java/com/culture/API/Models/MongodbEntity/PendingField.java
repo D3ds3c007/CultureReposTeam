@@ -8,13 +8,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.persistence.Basic;
 
 import com.culture.API.Models.*;
+import com.culture.API.Models.DTO.OwnerDTO;
 import com.culture.API.Repository.*;
 
 
 @Document(collection="PendingField")
 public class PendingField {
     
-    private Owner owner;
+    private OwnerDTO owner;
 
     @Basic
     private String hashcode;
@@ -32,7 +33,7 @@ public class PendingField {
 
     }
 
-    public PendingField(Owner owner, String hashcode, String description, String location, double area){
+    public PendingField(OwnerDTO owner, String hashcode, String description, String location, double area){
         this.owner = owner;
         this.hashcode = hashcode;
         this.description = description;
@@ -72,11 +73,11 @@ public class PendingField {
         this.area = area;
     }
 
-    public Owner getOwner() {
+    public OwnerDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(OwnerDTO owner) {
         this.owner = owner;
     }
 
