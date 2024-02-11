@@ -14,5 +14,7 @@ public interface FieldRepository extends JpaRepository<Field, Long> {
         List<Field> findByOwner(Owner o);
         List<Field> findAll();
         Field findByPlots(Plot plot);
+        Field findByHashcode(String hashcode);
+
 }
 

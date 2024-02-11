@@ -11,4 +11,5 @@ import com.culture.API.Models.*;
 public interface GroundTypeRepository extends JpaRepository<GroundType, Long>{
     GroundType save(GroundType groundType);
     List<GroundType> findAll();
+    GroundType findByIdGroundType(int idGroundType);
 }

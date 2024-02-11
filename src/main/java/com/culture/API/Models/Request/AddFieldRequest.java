@@ -6,7 +6,7 @@ public class AddFieldRequest {
     private double area;
     private String description;
     private String location;
-    private int plotsNumber;
+    private String plotNumber;
     private int groundType;
     private String[] pictures;
     private Location[] localisation;
@@ -26,12 +26,12 @@ public class AddFieldRequest {
     }
 
 
-    public AddFieldRequest(double area, String description, String location, int plotsNumber, int groundType,
+    public AddFieldRequest(double area, String description, String location, String plotsNumber, int groundType,
             String[] pictures, Location[] localisation) {
         this.area = area;
         this.description = description;
         this.location = location;
-        this.plotsNumber = plotsNumber;
+        this.plotNumber = plotsNumber;
         this.groundType = groundType;
         this.pictures = pictures;
         this.localisation = localisation;
@@ -54,11 +54,11 @@ public class AddFieldRequest {
     public void setLocation(String location) {
         this.location = location;
     }
-    public int getPlotsNumber() {
-        return plotsNumber;
+    public String getPlotNumber() {
+        return plotNumber;
     }
-    public void setPlotsNumber(int plotsNumber) {
-        this.plotsNumber = plotsNumber;
+    public void setPlotNumber(String plotNumber) {
+        this.plotNumber = plotNumber;
     }
     public int getGroundType() {
         return groundType;

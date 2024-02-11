@@ -76,6 +76,12 @@ public class Plot implements Serializable {
         this.groundType = groundType;
     }
 
+    public Plot(Field field, double area, GroundType groundType) {
+        this.field = field;
+        this.area = area;
+        this.groundType = groundType;
+    }
+
     public static Plot savePlot(Plot plot, PlotRepository plotRepository){
         Plot plot2 = plotRepository.save(plot);
         return plot2;

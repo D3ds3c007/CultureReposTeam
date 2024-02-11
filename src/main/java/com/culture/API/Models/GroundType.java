@@ -72,4 +72,10 @@ public class GroundType implements Serializable{
         return groundType;
     }
 
+    public static GroundType findGroundTypeById(int id, GroundTypeRepository or)
+    {
+        GroundType ow = or.findByIdGroundType(id);
+        return ow;
+    }
+
 }
