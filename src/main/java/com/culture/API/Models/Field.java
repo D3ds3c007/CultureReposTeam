@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.culture.API.Repository.FieldRepository;
+import com.culture.API.Repository.GroundTypeRepository;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -128,5 +129,11 @@ public class Field implements Serializable{
     {
         List<Field> listField = fi.findByOwner(owner);
         return listField;
+    }
+
+    public static Field findByHashcode(String hashcode, FieldRepository or)
+    {
+        Field ow = or.findByHashcode(hashcode);
+        return ow;
     }
 }

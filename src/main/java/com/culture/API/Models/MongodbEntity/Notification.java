@@ -6,10 +6,13 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.culture.API.Models.Field;
+import com.culture.API.Models.DTO.OwnerDTO;
 import com.culture.API.Repository.FieldRepository;
+import com.culture.API.Repository.GroundTypeRepository;
 import com.culture.API.Repository.NotificationRepository;
+import com.culture.API.Repository.OwnerRepository;
 import com.culture.API.Repository.PendingFieldRepository;
+import com.culture.API.Repository.PlotRepository;
 import com.culture.API.Repository.FieldPicturesRepository;
 import com.culture.API.Repository.FieldLocalisationRepository;
 
@@ -23,7 +26,7 @@ import com.culture.API.Models.*;
 @Document(collection="Notification")
 public class Notification {
     
-    private Owner owner;
+    private OwnerDTO owner;
 
     @Basic
     private String hashcode;
@@ -31,7 +34,7 @@ public class Notification {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public Notification(Owner owner, String hashcode, Date date) {
+    public Notification(OwnerDTO owner, String hashcode, Date date) {
         this.owner = owner;
         this.hashcode = hashcode;
         this.date = date;
@@ -40,11 +43,11 @@ public class Notification {
         
     }
 
-    public Owner getOwner() {
+    public OwnerDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(OwnerDTO owner) {
         this.owner = owner;
     }
 
@@ -79,38 +82,56 @@ public class Notification {
         return repository.findByHashcode(hashcode);
     }
 
-    public static Field validate(NotificationRepository repository, FieldRepository fieldRepository, PendingFieldRepository pendingRepository, String hashcode){
+    public static Field validate(OwnerRepository ownerRepository, NotificationRepository repository, FieldRepository fieldRepository, PendingFieldRepository pendingRepository, GroundTypeRepository groundTypeRepository, PlotRepository plotRepository, String hashcode) throws SQLException{
         Notification notif = repository.findByHashcode(hashcode);
         PendingField pending = pendingRepository.findByHashcode(hashcode);
-
+        Owner owner = Owner.findOwnerById(notif.getOwner().getIdOwner(), ownerRepository);
         Field f = new Field();
-            f.setOwner(notif.getOwner());
+            f.setOwner(owner);
             f.setHashcode(pending.getHashcode());
             f.setLocation(pending.getLocation());
             f.setDescription(pending.getDescription());
             f.setArea(pending.getArea());
 
+        
+
         try {
-            Field f2 = Field.saveField(f, fieldRepository);
-            repository.deleteByHashcode(notif.getHashcode());
-            pendingRepository.deleteByHashcode(hashcode);
-            
-            return f2;
+            Field savedField = Field.saveField(f, fieldRepository);
+            int plotNumber = pending.getPlotNumber();
+            double plotArea = pending.getArea() / plotNumber;
+            System.out.println(plotNumber);
+
+            GroundType g = GroundType.findGroundTypeById(pending.getGroundType(), groundTypeRepository);
+
+            for (int i = 0; i < plotNumber; i++) {
+                Plot plot = new Plot(savedField, plotArea, g);
+                System.out.println(i);
+
+                Plot.savePlot(plot, plotRepository);
+            }
+
+                repository.deleteByHashcode(notif.getHashcode());
+                pendingRepository.deleteByHashcode(hashcode);
+                
+            return savedField;
         } catch (Exception e) {
             return null;
         }
         
     }
 
-    public static void refuse(NotificationRepository repository, PendingFieldRepository pendingRepository, FieldPicturesRepository picturesRepository, FieldLocalisationRepository localisationRepository, String hashcode){
+    public static int refuse(NotificationRepository repository, PendingFieldRepository pendingRepository, FieldPicturesRepository picturesRepository, FieldLocalisationRepository localisationRepository, String hashcode){
         try {
+            Notification notif = repository.findByHashcode(hashcode);
+            int idOwner = notif.getOwner().getIdOwner();
             repository.deleteByHashcode(hashcode);
             pendingRepository.deleteByHashcode(hashcode);
             picturesRepository.deleteByHashcode(hashcode);
             localisationRepository.deleteByHashcode(hashcode);
+            return idOwner;
 
         } catch (Exception e) {
-
+            return 0;
         }
     }
     
