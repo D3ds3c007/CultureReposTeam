@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET})
+@CrossOrigin(origins = "*", methods= {RequestMethod.POST, RequestMethod.GET},  allowedHeaders = "*")
 public class OwnerController {
 
     @Autowired
